@@ -21,7 +21,7 @@
   - slaba informiranost,
   - pomanjkanje uporabniku prijaznih orodij za iskanje avtomobilov.
 - Glavna konkurenta:
-  - [avtonet.si](https://www.avtonet.si)
+  - [avtonet.si](https://www.avto.net)
   - [mobile.de](https://www.mobile.de)
 - Pomanjkljivosti obeh portalov:
   - zahtevata tehnično znanje in izkušnje,
