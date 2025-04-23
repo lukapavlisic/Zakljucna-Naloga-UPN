@@ -8,7 +8,62 @@
 <body>
     <div class="container">
         <h1>Najdi svoj avto</h1>
+        <form id="carForm">
+            <label>Budžet (€):</label>
+            <select id="budget">
+                <option value="10000">10,000</option>
+                <option value="20000">20,000</option>
+                <option value="30000">30,000</option>
+                <option value="40000">40,000</option>
+                <option value="">Vnesi ročno</option>
+            </select>
+            <input type="number" id="customBudget" placeholder="Vnesite znesek" style="display: none;">
+
+            <label>Želite športen ali prostoren avto?</label>
+            <select id="sportSpace">
+                <option value="">Vseeno</option>
+                <option value="sport">Športen</option>
+                <option value="space">Prostoren</option>
+            </select>
+
+            <label>Moderen ali starejši?</label>
+            <select id="modernOld">
+                <option value="">Vseeno</option>
+                <option value="modern">Moderen</option>
+                <option value="old">Starejši</option>
+            </select>
+
+            <label>Gorivo:</label>
+            <select id="fuel">
+                <option value="">Vseeno</option>
+                <option value="električni">Električni</option>
+                <option value="dizel">Dizel</option>
+                <option value="bencin">Bencin</option>
+                <option value="hibrid">Hibrid</option>
+            </select>
+
+            <label>Družinski avto?</label>
+            <select id="family">
+                <option value="">Vseeno</option>
+                <option value="yes">Da</option>
+                <option value="no">Ne</option>
+            </select>
+
+            <label>Trg:</label>
+            <select id="market">
+                <option value="">Vseeno</option>
+                <option value="Slovenija">Slovenija</option>
+                <option value="Tujina">Tujina</option>
+            </select>
+
+            <button type="submit">Poišči</button>
+        </form>
+
+        <div id="results"></div>
+        <br>
         <a href="/login">Prijava</a> | <a href="/register">Registracija</a>
     </div>
+
+    
 </body>
 </html>
