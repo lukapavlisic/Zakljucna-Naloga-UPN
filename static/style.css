@@ -22,7 +22,18 @@ h1 {
     font-size: 28px;
 }
 
-input {
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="username"],
+input[type="password"] {
     width: 100%;
     padding: 12px;
     margin-top: 5px;
@@ -59,4 +70,51 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.car {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+    transition: box-shadow 0.2s;
+}
+
+.car:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-top: 10px;
+    background: #f9f9f9;
+}
+
+.comment {
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.comment strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.rating {
+    font-weight: bold;
+    color: #ff9900;
+}
+
+.admin-delete {
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+    float: right;
 }
