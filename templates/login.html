@@ -1,15 +1,61 @@
 <!DOCTYPE html>
-<html>
-<head><title>Prijava</title><link rel="stylesheet" href="/static/style.css"></head>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prijava - Best Car For Your Budget</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 <body>
-<div class="container">
-    <h2>Prijava</h2>
-    <form method="post">
-        <input type="username" name="username" placeholder="Uporabniško ime" required>
-        <input type="password" name="password" placeholder="Geslo" required>
-        <button type="submit">Prijavi se</button>
-    </form>
-    <a href="/register">Še nimaš računa?</a>
-</div>
+    <header class="header">
+        <nav class="nav">
+            <h1>Best Car For Your Budget</h1>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}">Domov</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main">
+        <div class="auth-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="auth-header">
+                <h2>Prijava</h2>
+            </div>
+            
+            <form action="{{ url_for('login') }}" method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Uporabniško ime:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Geslo:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn">Prijava</button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Še nimaš računa? <a href="{{ url_for('register') }}">Registriraj se</a></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Best Car For Your Budget</p>
+        </div>
+    </footer>
 </body>
 </html>
