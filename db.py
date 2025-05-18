@@ -3,7 +3,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 from datetime import datetime
 
-# Inicializacija baze
 db = TinyDB('database.json')
 users_table = db.table('users')
 comments_table = db.table('comments')
@@ -15,7 +14,6 @@ Rating = Query()
 
 def init_db():
     """Inicializira bazo, če je potrebno."""
-    # Preverimo, če že obstaja admin uporabnik, če ne ga ustvarimo
     if not users_table.search(User.is_admin == True):
         admin_id = str(uuid.uuid4())
         users_table.insert({
@@ -28,7 +26,6 @@ def init_db():
 
 def register_user(username, password, is_admin=False):
     """Registrira novega uporabnika."""
-    # Preverimo, če uporabnik že obstaja
     if users_table.search(User.username == username):
         return False
     
