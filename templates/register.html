@@ -1,16 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head><title>Registracija</title><link rel="stylesheet" href="/static/style.css"></head>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracija - Best Car For Your Budget</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 <body>
-<div class="container">
-    <h2>Registracija</h2>
-    <form method="post">
-        <input type="username" name="username" placeholder="Uporabniško ime" required>
-        <input type="password" name="password" placeholder="Geslo" required>
-        <input name="admin_code" placeholder="Admin koda (neobvezno)">
-        <button type="submit">Registriraj se</button>
-    </form>
-    <a href="/login">Že imaš račun?</a>
-</div>
+    <header class="header">
+        <nav class="nav">
+            <h1>Best Car For Your Budget</h1>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}">Domov</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main">
+        <div class="auth-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="auth-header">
+                <h2>Registracija</h2>
+            </div>
+            
+            <form action="{{ url_for('register') }}" method="post" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Uporabniško ime:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Geslo:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin_code">Admin koda (neobvezno):</label>
+                    <input type="password" id="admin_code" name="admin_code">
+                    <small>Izpolnite samo, če se želite registrirati kot administrator.</small>
+                </div>
+                
+                <button type="submit" class="btn">Registracija</button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Že imaš račun? <a href="{{ url_for('login') }}">Prijavi se</a></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Best Car For Your Budget</p>
+        </div>
+    </footer>
 </body>
 </html>
