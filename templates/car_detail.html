@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ car.brand }} {{ car.model }} - Best Car For Your Budget</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <h1>Best Car For Your Budget</h1>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}">Nova iskanje</a>
+                {% if session.user_id %}
+                <span>Pozdravljeni, {{ session.username }}{% if session.is_admin %} (Admin){% endif %}</span>
+                <a href="{{ url_for('logout') }}">Odjava</a>
+                {% else %}
+                <a href="{{ url_for('login') }}">Prijava</a>
+                <a href="{{ url_for('register') }}">Registracija</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="car-detail-page">
+                <div class="car-header">
+                    <img src="{{ car.image }}" alt="{{ car.brand }} {{ car.model }}" class="car-header-image">
+                    <div class="car-header-info">
+                        <h2>{{ car.brand }} {{ car.model }} ({{ car.year }})</h2>
+                        <div class="car-price">{{ car.price }} €</div>
+                        <p>{{ car.description }}</p>
+                        <div class="car-details">
+                            <span class="car-detail">{{ car.fuel|capitalize }}</span>
+                            <span class="car-detail">{{ car.type|capitalize }}</span>
+                            <span class="car-detail">{{ car.market|capitalize }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Tehnične specifikacije</h3>
+                <div class="car-specs">
+                    <div class="car-spec">
+                        <div class="car-spec-title">Motor</div>
+                        <div class="car-spec-value">{{ car.engine }}</div>
+                    </div>
+                    <div class="car-spec">
+                        <div class="car-spec-title">Moč</div>
+                        <div class="car-spec-value">{{ car.power }}</div>
+                    </div>
+                    <div class="car-spec">
+                        <div class="car-spec-title">Pospešek</div>
+                        <div class="car-spec-value">{{ car.acceleration }}</div>
+                    </div>
+                    <div class="car-spec">
+                        <div class="car-spec-title">Poraba</div>
+                        <div class="car-spec-value">{{ car.consumption }}</div>
+                    </div>
+                </div>
+                
+                <div class="rating-section">
+                    <h3>Uporabniške ocene</h3>
+                    <div class="rating">{{ avg_rating }} / 5</div>
+                    
+                    {% if session.user_id %}
+                    <div class="rating-form">
+                        <form action="{{ url_for('rate_car_route') }}" method="post">
+                            <input type="hidden" name="car_id" value="{{ car.id }}">
+                            <label>Vaša ocena:</label>
+                            <div class="rating-buttons">
+                                <button type="submit" name="rating" value="1" class="rating-btn">1</button>
+                                <button type="submit" name="rating" value="2" class="rating-btn">2</button>
+                                <button type="submit" name="rating" value="3" class="rating-btn">3</button>
+                                <button type="submit" name="rating" value="4" class="rating-btn">4</button>
+                                <button type="submit" name="rating" value="5" class="rating-btn">5</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% else %}
+                    <p>Za ocenjevanje se morate <a href="{{ url_for('login') }}">prijaviti</a>.</p>
+                    {% endif %}
+                </div>
+                
+                <div class="comments-section">
+                    <h3>Komentarji uporabnikov</h3>
+                    
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <div class="comment-author">{{ comment.username }}</div>
+                                <div class="comment-date">{{ comment.timestamp }}</div>
+                            </div>
+                            <div class="comment-content">
+                                {{ comment.text }}
+                            </div>
+                            {% if session.is_admin %}
+                            <div class="comment-actions">
+                                <a href="{{ url_for('delete_comment_route', comment_id=comment.id, car_id=car.id) }}" class="btn btn-danger">Izbriši</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Ni komentarjev. Bodi prvi, ki bo komentiral ta avto!</p>
+                    {% endif %}
+                    
+                    {% if session.user_id %}
+                    <div class="comment-form">
+                        <h4>Dodaj komentar</h4>
+                        <form action="{{ url_for('add_comment_route') }}" method="post">
+                            <input type="hidden" name="car_id" value="{{ car.id }}">
+                            <div class="form-group">
+                                <textarea name="comment" placeholder="Napiši svoj komentar..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Objavi komentar</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <p>Za komentiranje se morate <a href="{{ url_for('login') }}">prijaviti</a>.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Best Car For Your Budget</p>
+        </div>
+    </footer>
+</body>
+</html>
